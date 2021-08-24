@@ -1,0 +1,24 @@
+NAME : ADESH SHARMA
+ROLL NO: 20CS60R44
+
+Run command : make
+
+Overall flow:
+
+	1)There are two python files ,one is parsers.py which contain and lex and parse rules and main.py ,which contain the interface implementation through which users can acess various fields.
+	
+	2)main.py has imported parsers.py
+	
+	3)When user run make command ,first he has enter to genre,the genre name should be exactly same as given in "rottentomatoes movie genre link.txt.pdf",if it does name with any of these ,a message  will be displayed to renter the genre name.The letters are case sensitive as it should exactly match as given in pdf.
+	
+	4)I have made a txt file out of the pdf,providing the same in code folder,to avoid any wrong format.
+	
+	5)After genre file is downloaded successfully,user has to enter the movie name,like genre name ,movie name is also case sensitive,so enter correct movie name as displayed in console screen.
+	
+	6)After that user has to enter the field name,plz strictly adhere with the fields given in assignment pdf,the letters are not case sensitive.
+	
+	7) After entering the field name,corresponding field values will be printed line by line on console and entries will be made in file "log.txt".**If no value of the entered field is found,then nothing will be printed and no entry will be made in log.txt.
+	
+	8)All the downloaded genre and movie html pages will be placed in data folder.
+
+	
