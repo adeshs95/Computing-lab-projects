@@ -1,0 +1,50 @@
+//NAME : ADESH SHARMA
+//ROLL NO: 20CS60R44
+
+Compile command : g++ file_name.c++
+Run command for client.cpp : ./a.out localhost portno
+Run command for server.cpp : ./a.out portno
+
+RUNNING INSTRUCTIONS:pLz run on ubuntu system,not sure about windows or wsl 
+
+ASSUMPTIONS :
+
+1)Input file and testcase file is in proper format,i.e. one testcase should be in one line,every output should be in complete line and it should be continuous i.e.there should not be any blank line between different testcases line or output lines.
+
+2)If run time error encountered in any one of teatcase,then further inputs will not be evaluated and either "run time error" or "TLE" will be dispalyed at client side.
+
+3) If server got disconnected ,and if client is still open and sends any message to server,then client will get server disconnection message and client will get termianted.
+
+4) After the execution ,the output file(contatning the outputs of client program) will be deleted.
+
+5)For TLE,the two error codes  i came to know are 31744 and 36608 and i have handled these.Make sure ur machine also have these error codes for tle
+
+6)The input.txt and testcase.txt,should be present at server directory.
+Commands syntax:
+
+1)For STOR:STOR file_name(ex : STOR add.cpp),there should be exactly one white space between command name and file_name,and no spaces in command name or file name(if actual file name doesnot contain any space)
+
+2)For RETR:RETR file_name(ex : RETR add.cpp),there should be exactly one white space between command name and file_name,and no spaces in command name or file name(if actual file name doesnot contain any space)
+
+3)For DELE:DELE file_name(ex : DELE add.cpp),there should be exactly one white space between command name and file_name,and no spaces in command name or file name(if actual file name doesnot contain any space)
+
+4)For Quit:QUIT(ex : QUIT),no spaces in command name
+
+5)For List:LIST(ex : LIST),no spaces in command name
+
+6)For CODEJUD:CODEJUD file_name(ex : CODEJUD add.cpp),there should be exactly one white space between command name and file_name,and no spaces in command name or file name(if actual file name doesnot contain any space).
+
+Note : In case of RETR fn or STOR fn , if file with same name as fn,is already exist at
+client side or server side,then it will be overwritten to keep updated data.While running,keep server.cpp and client.cpp,in separate folders,otherwise
+because of overwriting ,we may get empty file.
+
+ERRor handling:
+
+1)Comamnd name can be in any letter(capital or small)
+
+2)There can be any number of ' ','\t','\n' before command name and after filename,they will be removed in program.But no garbage in filename or command name,will be treated as invalid.
+
+3)If there is any file opening error,corresponding messages will be displayed.
+
+To terminate server ,press ctrl+c
+
