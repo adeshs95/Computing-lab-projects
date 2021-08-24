@@ -1,5 +1,5 @@
-//Adesh Sharma
-//Roll no :20CS60R44
+//Author  : Adesh Sharma
+//Roll no : 20CS60R44
 
 #include    <sys/types.h>
 #include    <sys/socket.h>
@@ -17,12 +17,13 @@
 using namespace std;
 
 int Error =0;           //Error,indicates any error in the command
+
 void error(char *msg)       //To output error message
 {
     perror(msg);
     exit(0);
 }
-string substring(string s,int ind,int len)  //Replacement of substr() of c++ stl
+string substring(string s,int ind,int len)  //Same as substr() of c++ stl
 {
     string str ="";
     for(int i =ind;i<ind+len && i<s.length();i++)
@@ -103,6 +104,7 @@ int main(int argc, char **argv)
 
         bzero(buffer,MAXLINE);
         n = recv(controlfd,buffer,MAXLINE,0);   //to know whether command is valid
+        
         if(n == 0){
             cout<<"Server got disconnected\n";
             exit(1);
@@ -112,6 +114,7 @@ int main(int argc, char **argv)
         if(strcmp("1" , buffer) == 0){  //valid comamnd
             bzero(buffer,MAXLINE);
             n = recv(controlfd,buffer,MAXLINE,0);
+            
             command = (string)buffer;
 
         }
@@ -175,12 +178,14 @@ int main(int argc, char **argv)
 
                         fread (data_buffer,sizeof(char),MAXLINE,fp);
                         n = send(controlfd, data_buffer, MAXLINE,0);
+                        
                         if (n < 0)
                             error((char*)"ERROR writing to socket");
                         
                     }
                     sprintf(remain_bytes,"%d",byte_remain); //remaining bytes or data
                     n = send(controlfd, remain_bytes, MAXLINE,0);
+                    
                     if (n < 0)
                         error((char*)"ERROR writing to socket");
 
@@ -188,6 +193,7 @@ int main(int argc, char **argv)
 
                         fread (data_buffer,sizeof(char),byte_remain,fp);
                         n = send(controlfd, data_buffer, MAXLINE,0);
+                        
                         if (n < 0)
                             error((char*)"ERROR writing to socket");
                     }
@@ -200,8 +206,10 @@ int main(int argc, char **argv)
             }
             else{
                 n = send(controlfd,"0",MAXLINE,0);       //File not exist,file opening error
+                
                 if (n < 0)
                     error((char*)"ERROR writing to socket");
+                
                 cout<<"Error in opening file. Check filename\n";
             }
             
@@ -218,18 +226,22 @@ int main(int argc, char **argv)
 
                 FILE *fp;
                 bzero(message,MAXLINE);
+                
                 char fn[MAXLINE];
                 n = recv(controlfd,fn,MAXLINE,0);
 
                 bzero(message,MAXLINE);
                 n = recv(controlfd,message,MAXLINE,0);
+                
                 if (n < 0)
                     error((char*)"ERROR reading from socket");
+                
                 if(strcmp("1",message)==0){ // 1 indicates that subsequently server going to send some file data
 
                     if((fp = fopen(fn,"w"))==NULL){
                         cout<<"Error in creating file\n";
                         n = send(controlfd,"0",MAXLINE,0);
+                        
                         if (n < 0)
                             error((char*)"ERROR writing to socket");
                     }
@@ -237,10 +249,12 @@ int main(int argc, char **argv)
                     else
                     {
                         n = send(controlfd, "1",MAXLINE, 0);
+                        
                         if (n < 0)
                             error((char*)"ERROR writing to socket");
 
                         n = recv(controlfd, num_lines, MAXLINE,0);     //number of lines in file
+                        
                         if (n < 0)
                             error((char*)"ERROR reading from socket");
 
@@ -249,22 +263,29 @@ int main(int argc, char **argv)
                         for(int i= 0; i < num_line; i++) { 
 
                             n = recv(controlfd, data_buffer, MAXLINE,0);
+                            
                             if (n < 0)
                                 error((char*)"ERROR reading from socket");
+                            
                             fwrite(data_buffer,sizeof(char),MAXLINE,fp);
                         
                         }
 
+                        
                         n = recv(controlfd, remain_bytes, MAXLINE,0);
+                        
                         if (n < 0)
                             error((char*)"ERROR reading from socket");
+                        
                         byte_remain = atoi(remain_bytes);
 
                         if (byte_remain > 0) { 
 
                             n = recv(controlfd, data_buffer, MAXLINE,0);
+                            
                             if (n < 0)
                                 error((char*)"ERROR reading from socket");
+                            
                             fwrite(data_buffer,sizeof(char),byte_remain,fp);
                             
                         }
@@ -296,8 +317,10 @@ int main(int argc, char **argv)
                             break;
 
                         n = recv(controlfd, data_buffer, MAXLINE,0);
+                        
                         if (n < 0)
                             error((char*)"ERROR reading from socket");
+                        
                         cout<<data_buffer;
                     }
                     cout<<endl;
@@ -316,8 +339,10 @@ int main(int argc, char **argv)
 
                                 char temp[MAXLINE];
                                 n = recv(controlfd, temp, MAXLINE,0);//File deletion status
+                                
                                 if (n < 0)
                                     error((char*)"ERROR reading from socket");
+                                
                                 cout<<temp<<endl;
                                 continue;
                             }
@@ -356,6 +381,7 @@ int main(int argc, char **argv)
                                             sprintf(num_lines,"%d",num_line);
 
                                             n = send(controlfd, num_lines, MAXLINE,0);
+                                            
                                             if (n < 0)
                                                 error((char*)"ERROR writing to socket");
 
@@ -363,12 +389,14 @@ int main(int argc, char **argv)
 
                                                 fread (data_buffer,sizeof(char),MAXLINE,fp);
                                                 n = send(controlfd, data_buffer, MAXLINE,0);
+                                                
                                                 if (n < 0)
                                                     error((char*)"ERROR writing to socket");
                                                 
                                             }
                                             sprintf(remain_bytes,"%d",byte_remain);
                                             n = send(controlfd, remain_bytes, MAXLINE,0);
+                                            
                                             if (n < 0)
                                                 error((char*)"ERROR writing to socket");
 
@@ -376,17 +404,21 @@ int main(int argc, char **argv)
 
                                                 fread (data_buffer,sizeof(char),byte_remain,fp);
                                                 n = send(controlfd, data_buffer, MAXLINE,0);
+                                                
                                                 if (n < 0)
                                                     error((char*)"ERROR writing to socket");
                                             }
                                             fclose(fp);
                                             cout<<"Sent file "<<fn<<endl;
+                                            
                                             bzero(message,MAXLINE);
                                             recv(controlfd,message,MAXLINE,0);//compilation status
+                                            
                                             cout<<message<<endl;
 
                                             if(strcmp("Problem occured at server side", message) == 0)
                                                 continue;
+                                            
                                             if(strcmp("COMPILE_SUCCESS" , message) == 0) {
 
                                                 recv(controlfd,message,MAXLINE,0);
@@ -407,8 +439,10 @@ int main(int argc, char **argv)
                                     }
                                     else{
                                         n = send(controlfd,"0",MAXLINE,0);       //File not exist,file opening error
+                                        
                                         if (n < 0)
                                             error((char*)"ERROR writing to socket");
+                                        
                                         cout<<"Error in opening file. Check filename\n";
                                     }
                                     
